@@ -1,1 +1,272 @@
 
+import React, { useState, useEffect } from 'react';
+
+// Main App component
+const App = () => {
+    // State for the custom message box
+    const [message, setMessage] = useState('');
+    const [showMessageBox, setShowMessageBox] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
+    // Function to show custom message box
+    const showCustomMessage = (msg) => {
+        setMessage(msg);
+        setShowMessageBox(true);
+    };
+
+    // Function to close custom message box
+    const closeCustomMessageBox = () => {
+        setShowMessageBox(false);
+    };
+
+    // Form submission handler
+    const handleSubmit = async (event) => {
+        event.preventDefault(); // Prevent default form submission
+
+        setIsLoading(true); // Show loading state
+
+        const form = event.target;
+        const formData = new FormData(form);
+
+        // Add a hidden field for _subject to set the email's subject line
+        formData.append('_subject', 'Service Request Submitted - Surveillance System');
+
+        try {
+            const response = await fetch(form.action, {
+                method: form.method,
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                showCustomMessage('Thank you for your service request! We have received your message and will contact you promptly.');
+                form.reset(); // Clear the form
+            } else {
+                const data = await response.json();
+                if (Object.hasOwnProperty.call(data, 'errors')) {
+                    showCustomMessage('Error: ' + data["errors"].map(error => error["message"]).join(", "));
+                } else {
+                    showCustomMessage('An unexpected error occurred during submission. Please try again or call us.');
+                }
+            }
+        } catch (error) {
+            showCustomMessage('Network error: Could not connect to the server. Please check your internet connection and try again.');
+        } finally {
+            setIsLoading(false); // Hide loading state
+        }
+    };
+
+    // Effect to initialize Lucide Icons on component mount
+    useEffect(() => {
+        // Ensure lucide is defined before calling createIcons
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    }, [isLoading]); // Re-create icons if loading state changes (for button icon)
+
+    return (
+        <div className="min-h-screen bg-zinc-950 text-zinc-100 p-4 sm:p-6 font-inter">
+            <div className="max-w-4xl mx-auto bg-zinc-900 rounded-2xl shadow-xl border border-zinc-800 p-8 sm:p-12 my-10">
+
+                {/* Header Section */}
+                <h1 className="text-4xl sm:text-5xl font-extrabold text-blue-500 mb-8 sm:mb-12 flex flex-col sm:flex-row items-center justify-center text-center gap-3 sm:gap-4 leading-tight">
+                    <i data-lucide="shield-check" className="w-16 h-16 text-blue-600 drop-shadow-md"></i>
+                    <span>Premier Security Camera Remote Support, <br className="sm:hidden" />Repair & Online Solutions</span>
+                </h1>
+                <p className="text-lg sm:text-xl mb-12 sm:mb-16 text-zinc-400 text-center max-w-3xl mx-auto">
+                    Experience unparalleled peace of mind with our **expert online and remote support** for all major security camera brands, coupled with comprehensive **on-site repair and meticulous system maintenance**. We ensure your **surveillance infrastructure** is always operating at its peak performance and reliability.
+                </p>
+
+                {/* Core Expertise Section */}
+                <section className="mb-12 sm:mb-16">
+                    <h2 className="text-3xl sm:text-4xl font-bold text-center text-blue-500 mb-8 sm:mb-12">Our Core Expertise: Comprehensive System Service & Repair</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+                        <ServiceCard
+                            icon="cctv"
+                            title="Security Camera Repair"
+                            description="Specialized diagnosis and repair for all types of security cameras, including advanced IP, traditional Analog, Dome, Bullet, and PTZ models. We resolve issues such as blurry images, night vision failures, and connectivity problems to restore optimal camera performance and clarity."
+                        />
+                        <ServiceCard
+                            icon="monitor-dot"
+                            title="DVR System Troubleshooting"
+                            description="Comprehensive troubleshooting and repair services for Digital Video Recorders (DVRs). Our technicians expertly address common problems like recording failures, inaccessible playback, and system errors, ensuring your critical surveillance footage is always captured and readily available."
+                        />
+                        <ServiceCard
+                            icon="server"
+                            title="NVR & Network System Service"
+                            description="Advanced maintenance and repair for Network Video Recorders (NVRs) and their integrated IP-based surveillance networks. We meticulously resolve network connectivity issues, unexpected video loss, and configuration challenges to guarantee seamless remote monitoring and robust system integrity."
+                        />
+                    </div>
+                </section>
+
+                {/* Remote & Online Surveillance Support Section */}
+                <section className="mb-12 sm:mb-16">
+                    <h2 className="text-3xl sm:text-4xl font-bold text-center text-blue-500 mb-8 sm:mb-12">Seamless Remote & Online Surveillance Support</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+                        <ServiceCard
+                            icon="globe"
+                            title="Global Online Access & Configuration"
+                            description="Receive expert assistance from anywhere in the world. We provide online support for configuring network settings, setting up remote access, managing user permissions, and ensuring your surveillance system is accessible and secure over the internet."
+                        />
+                        <ServiceCard
+                            icon="cloud-fog"
+                            title="Firmware Updates & Software Optimization"
+                            description="Keep your system up-to-date with the latest security patches and features. Our remote technicians can perform firmware updates, software optimization, password resets, and resolve common software glitches for all major security camera brands."
+                        />
+                        <ServiceCard
+                            icon="wrench"
+                            title="Major Brand Compatibility & Troubleshooting"
+                            description="Whether you use Hikvision, Dahua, Axis, Lorex, Reolink, Arlo, Ring, Nest, or another leading brand, our specialists are adept at troubleshooting and resolving issues remotely. We offer expert guidance to restore functionality and optimize performance for your specific equipment."
+                            colSpan="md:col-span-2"
+                        />
+                    </div>
+                    <div className="text-center mt-10">
+                        <p className="text-lg text-zinc-300 mb-6">Ready for immediate remote assistance?</p>
+                        <a href="#contactForm" className="btn-primary">
+                            <i data-lucide="mouse-pointer" className="mr-3 w-6 h-6"></i> Request Remote Support
+                        </a>
+                    </div>
+                </section>
+
+                {/* Service Engagement Details Section */}
+                <section className="mb-12 sm:mb-16">
+                    <h2 className="text-3xl sm:text-4xl font-bold text-center text-blue-500 mb-8 sm:mb-12">Service Engagement Details</h2>
+                    <div className="bg-zinc-800 border-l-8 border-rose-700 rounded-lg p-6 sm:p-8 shadow-inner">
+                        <p className="text-lg text-zinc-200 leading-relaxed">
+                            Our standard <strong>on-site service consultation fee</strong> is <span className="text-orange-400 font-extrabold text-3xl sm:text-4xl inline-block px-1 align-bottom">$375</span>. This fee covers the comprehensive diagnostic process and addresses most common immediate repair issues identified by our certified technicians during their visit.
+                        </p>
+                        <p className="mt-5 text-base text-zinc-300 leading-relaxed">
+                            Please be advised that any necessary <strong>replacement components</strong> (e.g., new cameras, specialized cabling, DVR/NVR parts, power supplies) or <strong>additional installation labor</strong> extending beyond the initial service consultation will be quoted transparently and discussed with you in advance. We prioritize clarity in all our pricing and services.
+                        </p>
+                        <p className="mt-5 text-sm text-zinc-400 leading-relaxed">
+                            Our commitment is to ensure your existing surveillance infrastructure functions efficiently, reliably, and securely, providing you with uninterrupted peace of mind.
+                        </p>
+                    </div>
+                </section>
+
+                {/* Pricing & Payment Integration (Placeholder) */}
+                <section className="mb-12 sm:mb-16">
+                    <h2 className="text-3xl sm:text-4xl font-bold text-center text-blue-500 mb-8 sm:mb-12">Flexible Service & Payment Options</h2>
+                    <p className="text-lg text-zinc-300 text-center mb-8">
+                        Whether you need a one-time remote diagnostic, a comprehensive on-site repair, or an ongoing maintenance plan, we offer flexible solutions.
+                    </p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+                        <div className="service-card p-6">
+                            <h4 className="text-2xl font-bold text-blue-300 mb-4">Remote Diagnostic & Support Package</h4>
+                            <p className="text-zinc-300 text-base mb-6">
+                                Quick and efficient remote troubleshooting for software, configuration, and connectivity issues. Ideal for immediate assistance.
+                            </p>
+                            <p className="text-orange-400 font-extrabold text-4xl mb-6">Starting at $99</p>
+                            <a href="YOUR_STRIPE_REMOTE_LINK" target="_blank" rel="noopener noreferrer" className="btn-primary w-full">
+                                <i data-lucide="credit-card" className="mr-3 w-5 h-5"></i> Learn More & Pay
+                            </a>
+                        </div>
+                        <div className="service-card p-6">
+                            <h4 className="text-2xl font-bold text-blue-300 mb-4">Annual System Health Check & Support</h4>
+                            <p className="text-zinc-300 text-base mb-6">
+                                Proactive maintenance including firmware updates, performance tuning, and priority remote support throughout the year.
+                            </p>
+                            <p className="text-orange-400 font-extrabold text-4xl mb-6">Custom Quote</p>
+                            <a href="#contactForm" className="btn-primary w-full">
+                                <i data-lucide="file-text" className="mr-3 w-5 h-5"></i> Request Custom Quote
+                            </a>
+                        </div>
+                    </div>
+                    <p className="text-sm text-zinc-500 text-center mt-8">
+                        Note: Payments are securely processed via Stripe. Click "Learn More & Pay" to be redirected to our secure checkout.
+                    </p>
+                </section>
+
+                {/* Contact Section */}
+                <section id="contactForm" className="mt-12 sm:mt-16 text-center">
+                    <h2 className="text-3xl sm:text-4xl font-bold text-center text-blue-500 mb-8 sm:mb-12">Initiate Service or Request a Consultation</h2>
+                    
+                    <p className="text-lg text-zinc-300 mb-8">
+                        For immediate assistance or urgent system support, please contact our service dispatch directly:
+                    </p>
+                    <p className="text-4xl sm:text-5xl font-extrabold text-orange-400 mb-10 sm:mb-12">
+                        <a href="tel:+12163338245" className="hover:underline flex items-center justify-center group">
+                            <i data-lucide="phone-call" className="inline-block mr-4 sm:mr-5 w-10 h-10 sm:w-12 sm:h-12 transition-transform duration-300 group-hover:scale-110"></i> 216-333-8245
+                        </a>
+                    </p>
+
+                    <p className="text-lg text-zinc-300 mb-8 sm:mb-10">
+                        Alternatively, complete the inquiry form below to schedule a detailed consultation or request service. Our team will respond promptly to understand your specific needs.
+                    </p>
+
+                    <div className="form-container">
+                        <form onSubmit={handleSubmit}>
+                            <div className="form-group">
+                                <label htmlFor="fullName">Your Full Name:</label>
+                                <input type="text" id="fullName" name="name" required placeholder="Johnathan Doe" className="block w-full" />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="emailAddress">Your Professional Email Address:</label>
+                                <input type="email" id="emailAddress" name="email" required placeholder="your.email@example.com" className="block w-full" />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="phoneNumber">Your Direct Phone Number (for remote assistance):</label>
+                                <input type="tel" id="phoneNumber" name="phone" placeholder="(123) 456-7890" className="block w-full" />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="cameraBrand">Camera/System Brand (e.g., Hikvision, Arlo, etc.):</label>
+                                <input type="text" id="cameraBrand" name="camera_brand" placeholder="e.g., Hikvision, Dahua, Arlo, etc. (Optional)" className="block w-full" />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="serviceType">Preferred Service Type:</label>
+                                <select id="serviceType" name="service_type" className="form-select block w-full bg-zinc-800 border-zinc-600 text-zinc-100 rounded-lg p-3">
+                                    <option value="remote_support">Remote / Online Support</option>
+                                    <option value="on_site_repair">On-site Repair Service</option>
+                                    <option value="performance_check">Performance Check / Optimization</option>
+                                    <option value="general_inquiry">General Inquiry</option>
+                                </select>
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="message">Detailed Service Request or Inquiry:</label>
+                                <textarea id="message" name="message" rows="6" placeholder="Please describe your security camera issues, system repair requirements, or desired maintenance schedule. Be as specific as possible for remote support." className="block w-full"></textarea>
+                            </div>
+                            <div className="text-center mt-8 sm:mt-12">
+                                <button type="submit" className="btn-primary" disabled={isLoading}>
+                                    {isLoading ? (
+                                        <>
+                                            Submitting...
+                                            <span className="loading-spinner ml-3"></span>
+                                        </>
+                                    ) : (
+                                        <>
+                                            Submit Service Request
+                                            <i data-lucide="send" className="inline-block ml-3 sm:ml-4 w-5 h-5 sm:w-6 h-6"></i>
+                                        </>
+                                    )}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+            </div>
+
+            {/* Custom Message Box */}
+            {showMessageBox && (
+                <div id="messageBox">
+                    <p id="messageText">{message}</p>
+                    <button onClick={closeCustomMessageBox}>OK</button>
+                </div>
+            )}
+        </div>
+    );
+};
+
+// ServiceCard Component (reusable for different service types)
+const ServiceCard = ({ icon, title, description, colSpan = '' }) => {
+    return (
+        <div className={`service-card p-6 sm:p-8 ${colSpan}`}>
+            <i data-lucide={icon} className="w-16 h-16 text-blue-400 mb-5 sm:mb-6"></i>
+            <h4 className="text-xl sm:text-2xl font-bold text-blue-300 mb-4">{title}</h4>
+            <p className="text-zinc-300 text-sm sm:text-base leading-relaxed">{description}</p>
+        </div>
+    );
+};
+
+export default App;
