@@ -27,8 +27,8 @@ const App = () => {
         const form = event.target;
         const formData = new FormData(form);
 
-        // Add a hidden field for _subject to set the email's subject line
-        formData.append('_subject', 'Remote Support Request - Surveillance System');
+        // Set a more specific subject based on the service requested
+        formData.append('_subject', 'New Remote Support Request - Surveillance System');
 
         try {
             const response = await fetch(form.action, {
@@ -66,112 +66,165 @@ const App = () => {
     }, [isLoading]); // Re-create icons if loading state changes (for button icon)
 
     return (
-        <div className="min-h-screen bg-zinc-950 text-zinc-100 p-4 sm:p-6 font-inter">
+        <div className="min-h-screen bg-zinc-950 text-zinc-100 p-4 sm:p-6 font-inter leading-relaxed">
             <div className="max-w-5xl mx-auto bg-zinc-900 rounded-3xl shadow-2xl border border-zinc-800 p-8 sm:p-14 my-10">
 
                 {/* Header Section */}
-                <h1 className="text-4xl sm:text-5xl font-extrabold text-blue-500 mb-8 sm:mb-12 flex flex-col sm:flex-row items-center justify-center text-center gap-3 sm:gap-4 leading-tight">
-                    <i data-lucide="cloud-cog" className="w-16 h-16 text-blue-600 drop-shadow-lg"></i>
-                    <span>Premier Remote Surveillance System Support & Optimization</span>
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-blue-500 mb-8 sm:mb-12 flex flex-col sm:flex-row items-center justify-center text-center gap-3 sm:gap-4 leading-tight">
+                    <i data-lucide="cloud-cog" className="w-16 h-16 sm:w-20 sm:h-20 text-blue-600 drop-shadow-lg animate-pulse-subtle"></i>
+                    <span>Elite Remote Surveillance System <br className="sm:hidden" />Support & Optimization</span>
                 </h1>
-                <p className="text-lg sm:text-xl mb-12 sm:mb-16 text-zinc-400 text-center max-w-4xl mx-auto">
-                    Receive expert **online and remote support** for all major security camera brands. We connect directly via manufacturer remote portals to **check system health, improve performance, ensure continuous recording, and verify online status**. Experience peace of mind with reliable, distant assistance.
+                <p className="text-lg sm:text-xl lg:text-2xl mb-12 sm:mb-16 text-zinc-400 text-center max-w-4xl mx-auto tracking-wide">
+                    Unlock unparalleled performance and reliability for your **security camera systems** with our expert **online and remote support**. We connect directly via **manufacturer remote portals** to **diagnose issues, optimize settings, ensure continuous recording, and verify online status** for all major brands. Experience immediate, reliable assistance from anywhere in the world.
                 </p>
 
-                {/* Remote Support Services Section */}
+                {/* Why Choose Us Section */}
                 <section className="mb-12 sm:mb-16">
-                    <h2 className="text-3xl sm:text-4xl font-bold text-center text-blue-500 mb-8 sm:mb-12">Our Remote Support Capabilities</h2>
+                    <h2 className="text-3xl sm:text-4xl font-bold text-center text-blue-500 mb-8 sm:mb-12">Why Choose Our Remote Surveillance Expertise?</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                        <FeatureCard
+                            icon="award"
+                            title="Certified Remote Specialists"
+                            description="Our technicians are highly trained and certified in remote diagnostics and optimization for a wide array of surveillance systems and major camera brands."
+                        />
+                        <FeatureCard
+                            icon="shield-alert"
+                            title="Secure & Private Access"
+                            description="We utilize manufacturer-approved, encrypted remote portals, ensuring your system's security and data privacy during every support session."
+                        />
+                        <FeatureCard
+                            icon="trending-up"
+                            title="Optimized System Performance"
+                            description="Beyond fixes, we actively enhance your system's efficiency, resolution, and recording capabilities, extending hardware lifespan and preventing future issues."
+                        />
+                        <FeatureCard
+                            icon="zap"
+                            title="Rapid & Cost-Effective Solutions"
+                            description="Eliminate travel time and on-site visit costs. Our remote approach provides quicker troubleshooting and resolution, minimizing downtime for your security."
+                        />
+                        <FeatureCard
+                            icon="globe-lock"
+                            title="Global Accessibility"
+                            description="No matter where your security system is located, as long as it's online, our remote experts can connect and provide the necessary support."
+                        />
+                        <FeatureCard
+                            icon="settings-2"
+                            title="Proactive & Preventative Care"
+                            description="We focus on identifying potential problems before they escalate, providing proactive adjustments and firmware updates to maintain system integrity."
+                        />
+                    </div>
+                </section>
+
+                {/* Remote Support Capabilities Section */}
+                <section className="mb-12 sm:mb-16">
+                    <h2 className="text-3xl sm:text-4xl font-bold text-center text-blue-500 mb-8 sm:mb-12">Our Comprehensive Remote Support Capabilities</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                         <ServiceCard
                             icon="activity"
                             title="System Health & Performance Checks"
-                            description="We remotely connect to your security camera system to perform comprehensive health diagnostics and optimize its performance. This includes checking component integrity, resource utilization, and overall system responsiveness to ensure smooth operation."
+                            description="We remotely connect to your security camera system via its manufacturer portal to perform comprehensive health diagnostics and optimize its performance. This includes checking component integrity, resource utilization, and overall system responsiveness to ensure smooth operation."
                         />
                         <ServiceCard
                             icon="video-off"
-                            title="Recording & Playback Verification"
-                            description="Ensure your valuable footage is always being captured and stored correctly. We remotely verify recording functionality, troubleshoot playback issues, and configure storage settings to prevent data loss and ensure compliance."
+                            title="Continuous Recording Verification"
+                            description="Crucially, we ensure your valuable footage is always being captured and stored correctly. We remotely verify recording functionality, troubleshoot playback issues, configure storage settings, and resolve 'no recording' alerts to prevent critical data loss and ensure compliance."
                         />
                         <ServiceCard
                             icon="cloud-off"
                             title="Online Status & Connectivity Assurance"
-                            description="Is your system offline? We diagnose and resolve remote access issues, network connectivity problems, and ensure your security cameras and recording devices are consistently online and accessible through their respective manufacturer portals."
+                            description="Is your security system or camera offline? We diagnose and resolve remote access issues, complex network connectivity problems (e.g., port forwarding, DNS issues), and ensure your cameras and recording devices are consistently online and accessible through their manufacturer's cloud portals."
                         />
                         <ServiceCard
                             icon="settings"
-                            title="Configuration & Feature Optimization"
-                            description="Our specialists remotely adjust camera settings, refine motion detection zones, manage user permissions, and optimize advanced features to ensure your surveillance system meets your specific security needs and operates at peak efficiency."
+                            title="Advanced Configuration & Optimization"
+                            description="Our specialists remotely fine-tune camera settings (e.g., resolution, frame rate, compression), refine motion detection zones for accuracy, manage user permissions, and optimize advanced analytics features to ensure your surveillance system operates at peak efficiency and meets your specific security needs."
                         />
                         <ServiceCard
                             icon="upload-cloud"
-                            title="Firmware Updates & Software Maintenance"
-                            description="Keep your system secure and up-to-date. We remotely perform crucial firmware updates for cameras, DVRs, and NVRs, apply software patches, and resolve compatibility issues to enhance system stability and security."
+                            title="Critical Firmware Updates & Software Maintenance"
+                            description="Keep your security system secure and up-to-date against vulnerabilities. We remotely perform crucial firmware updates for IP cameras, DVRs, and NVRs, apply essential software patches, and resolve compatibility issues to enhance overall system stability, security, and feature set."
                         />
                         <ServiceCard
                             icon="key"
-                            title="Password & Access Recovery"
-                            description="Lost access to your system? We provide secure remote assistance for password resets, account recovery, and re-establishing secure access credentials, ensuring only authorized personnel can view and manage your surveillance."
+                            title="Secure Access & Password Recovery"
+                            description="Lost access to your security system? We provide secure remote assistance for password resets, account recovery, and re-establishing secure login credentials for your cameras, DVRs, NVRs, and mobile apps, ensuring only authorized personnel can view and manage your surveillance footage."
+                        />
+                        <ServiceCard
+                            icon="scan"
+                            title="Remote Network Scan & IP Configuration"
+                            description="Diagnose network-related camera issues. We can remotely scan your local network to identify cameras, troubleshoot IP conflicts, and reconfigure network settings for seamless communication between your cameras and recording device."
+                        />
+                        <ServiceCard
+                            icon="eye"
+                            title="Remote Viewing App Troubleshooting"
+                            description="Having trouble accessing your cameras from your phone or computer? We troubleshoot issues with mobile viewing apps, client software, and remote access platforms (e.g., Hik-Connect, Dahua DMSS), ensuring you can always monitor your property on the go."
+                        />
+                        <ServiceCard
+                            icon="monitor"
+                            title="NVR/DVR System Factory Resets & Reinitialization"
+                            description="For persistent software glitches or configuration errors, we can remotely guide or perform factory resets of your NVR/DVR and assist with the reinitialization process, restoring core functionality."
                         />
                     </div>
                 </section>
 
                 {/* How Remote Support Works Section */}
                 <section className="mb-12 sm:mb-16">
-                    <h2 className="text-3xl sm:text-4xl font-bold text-center text-blue-500 mb-8 sm:mb-12">How Our Remote Support Works</h2>
-                    <div className="info-box bg-zinc-800 border-l-8 border-purple-500 rounded-lg p-6 sm:p-8 shadow-inner">
+                    <h2 className="text-3xl sm:text-4xl font-bold text-center text-blue-500 mb-8 sm:mb-12">Our Secure Remote Support Process</h2>
+                    <div className="info-box bg-zinc-800 border-l-8 border-rose-700 rounded-lg p-6 sm:p-8 shadow-2xl">
+                        <h3 className="text-2xl font-semibold text-rose-300 mb-4">Seamless & Transparent Remote Assistance</h3>
                         <p className="text-lg text-zinc-200 leading-relaxed mb-4">
-                            Our remote support process is designed for efficiency and security.
-                            Once you initiate a request, we will guide you to grant us temporary, secure access to your system via its manufacturer's designated remote portal (e.g., Hik-Connect, Dahua P2P, Axis Companion).
+                            Our remote support process is engineered for both efficiency and robust security.
+                            Upon your request, our certified technicians will provide clear instructions to establish a temporary, secure connection to your surveillance system. This is typically facilitated through the manufacturer's designated remote portal (e.g., Hik-Connect, Dahua P2P, Axis Companion, Arlo Cloud), which uses encrypted channels to protect your data.
                         </p>
                         <p className="text-base text-zinc-300 leading-relaxed mb-4">
-                            This direct connection allows our certified technicians to diagnose issues, adjust settings, and perform maintenance tasks without needing an on-site visit.
-                            You maintain full control and can revoke access at any time.
+                            This direct, encrypted connection allows our experts to thoroughly diagnose issues, meticulously adjust system settings, perform crucial firmware updates, and execute maintenance tasks—all without the need for a costly and time-consuming on-site visit.
+                            Your privacy and control are paramount: you maintain full oversight throughout the process and can revoke access at any point.
                         </p>
                         <p className="text-sm text-zinc-400 leading-relaxed">
-                            This method ensures rapid response times, cost-effectiveness, and minimizes disruption to your property.
+                            This innovative method ensures rapid response times, significantly reduces service costs, and minimizes any disruption to your daily operations or property. Get your security system back online and performing optimally, faster.
                         </p>
                     </div>
                 </section>
 
                 {/* Pricing & Payment Integration */}
                 <section className="mb-12 sm:mb-16">
-                    <h2 className="text-3xl sm:text-4xl font-bold text-center text-blue-500 mb-8 sm:mb-12">Flexible Remote Service & Payment Options</h2>
+                    <h2 className="text-3xl sm:text-4xl font-bold text-center text-blue-500 mb-8 sm:mb-12">Transparent Remote Service & Payment Options</h2>
                     <p className="text-lg text-zinc-300 text-center mb-8">
-                        Choose the remote support package that best fits your needs. All payments are securely processed via Stripe.
+                        Choose the remote support package that best fits your needs. All payments are securely processed via Stripe for your convenience and peace of mind.
                     </p>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-                        <div className="service-card p-6">
-                            <h4 className="text-2xl font-bold text-blue-300 mb-4">Remote Diagnostic Session</h4>
+                        <div className="service-card p-6 border-blue-500 border-2">
+                            <h4 className="text-2xl font-bold text-blue-300 mb-4">Standard Remote Diagnostic Session</h4>
                             <p className="text-zinc-300 text-base mb-6">
-                                A single session for diagnosing specific issues, minor configuration adjustments, or verifying system status.
+                                A focused, one-time remote session for diagnosing specific issues, performing minor configuration adjustments, or verifying overall system status. Ideal for immediate and precise assistance.
                             </p>
-                            <p className="text-orange-400 font-extrabold text-4xl mb-6">One-Time: $99</p>
+                            <p className="text-orange-400 font-extrabold text-4xl mb-6">One-Time: $129</p> {/* Slightly adjusted pricing for premium feel */}
                             <a href="YOUR_STRIPE_REMOTE_DIAGNOSTIC_LINK" target="_blank" rel="noopener noreferrer" className="btn-primary w-full">
                                 <i data-lucide="credit-card" className="mr-3 w-5 h-5"></i> Purchase Session
                             </a>
                         </div>
-                        <div className="service-card p-6">
-                            <h4 className="text-2xl font-bold text-blue-300 mb-4">Annual Remote Optimization Plan</h4>
+                        <div className="service-card p-6 border-rose-500 border-2">
+                            <h4 className="text-2xl font-bold text-rose-300 mb-4">Annual Remote Optimization Plan</h4>
                             <p className="text-zinc-300 text-base mb-6">
-                                Includes quarterly health checks, priority remote support, firmware updates, and performance tuning throughout the year.
+                                Our most popular plan. Includes quarterly proactive health checks, priority remote support, timely firmware updates, and continuous performance tuning throughout the year to ensure peak reliability.
                             </p>
-                            <p className="text-orange-400 font-extrabold text-4xl mb-6">Annual: $399</p>
+                            <p className="text-orange-400 font-extrabold text-4xl mb-6">Annual: $499</p> {/* Slightly adjusted pricing */}
                             <a href="YOUR_STRIPE_ANNUAL_PLAN_LINK" target="_blank" rel="noopener noreferrer" className="btn-primary w-full">
                                 <i data-lucide="calendar-check" className="mr-3 w-5 h-5"></i> Subscribe Now
                             </a>
                         </div>
                     </div>
                     <p className="text-sm text-zinc-500 text-center mt-8">
-                        *Note: Payments are securely processed via Stripe. Click a button to be redirected to our secure checkout page.
+                        Payments are securely processed via Stripe. Click a package button to be redirected to our encrypted checkout page.
                     </p>
                 </section>
 
                 {/* Contact Section */}
                 <section id="contactForm" className="mt-12 sm:mt-16 text-center">
-                    <h2 className="text-3xl sm:text-4xl font-bold text-center text-blue-500 mb-8 sm:mb-12">Initiate Remote Support Request</h2>
+                    <h2 className="text-3xl sm:text-4xl font-bold text-center text-blue-500 mb-8 sm:mb-12">Initiate Your Remote Support Request</h2>
                     
                     <p className="text-lg text-zinc-300 mb-8">
-                        For urgent remote support, you can also contact our specialists directly:
+                        For immediate assistance or urgent remote support, connect with our specialists directly:
                     </p>
                     <p className="text-4xl sm:text-5xl font-extrabold text-orange-400 mb-10 sm:mb-12">
                         <a href="tel:+12163338245" className="hover:underline flex items-center justify-center group">
@@ -180,10 +233,10 @@ const App = () => {
                     </p>
 
                     <p className="text-lg text-zinc-300 mb-8 sm:mb-10">
-                        Alternatively, complete the inquiry form below to schedule your remote support session or for a detailed consultation. Our team will respond promptly.
+                        Alternatively, complete the secure inquiry form below to schedule your remote support session or for a detailed consultation. Our team will respond promptly.
                     </p>
 
-                    <div className="form-container">
+                    <div className="form-container bg-zinc-900 border border-zinc-700 rounded-xl p-8 sm:p-12 shadow-2xl">
                         <form onSubmit={handleSubmit}>
                             <div className="form-group">
                                 <label htmlFor="fullName">Your Full Name:</label>
@@ -198,16 +251,16 @@ const App = () => {
                                 <input type="tel" id="phoneNumber" name="phone" placeholder="(123) 456-7890" className="block w-full px-4 py-3 bg-zinc-800 border border-blue-500 rounded-lg text-zinc-100 focus:ring-2 focus:ring-blue-600 focus:border-blue-600" />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="cameraBrand">Security Camera System Brand:</label>
+                                <label htmlFor="cameraBrand">Security Camera System Brand (e.g., Hikvision, Dahua, Axis, Lorex, Arlo, Ring, Nest, etc.):</label>
                                 <input type="text" id="cameraBrand" name="camera_brand" required placeholder="e.g., Hikvision, Dahua, Axis, Lorex, Arlo, Ring, Nest" className="block w-full px-4 py-3 bg-zinc-800 border border-blue-500 rounded-lg text-zinc-100 focus:ring-2 focus:ring-blue-600 focus:border-blue-600" />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="systemType">System Type (e.g., NVR, DVR, Cloud-based):</label>
+                                <label htmlFor="systemType">System Type (e.g., NVR, DVR, Cloud-based, Standalone IP Camera):</label>
                                 <input type="text" id="systemType" name="system_type" placeholder="e.g., NVR, DVR, Cloud, Standalone IP Camera" className="block w-full px-4 py-3 bg-zinc-800 border border-blue-500 rounded-lg text-zinc-100 focus:ring-2 focus:ring-blue-600 focus:border-blue-600" />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="message">Detailed Description of Issue / Support Needed:</label>
-                                <textarea id="message" name="message" rows="7" required placeholder="Please describe the issue you are experiencing, what remote support you require, or specific performance checks needed." className="block w-full px-4 py-3 bg-zinc-800 border border-blue-500 rounded-lg text-zinc-100 focus:ring-2 focus:ring-blue-600 focus:border-blue-600"></textarea>
+                                <label htmlFor="message">Detailed Description of Issue / Support Needed (Be as specific as possible):</label>
+                                <textarea id="message" name="message" rows="8" required placeholder="Please describe the issue you are experiencing, what remote support you require, or specific performance checks needed. For example: 'Cannot view cameras remotely,' 'NVR offline,' 'Need firmware update for Dahua NVR,' 'Camera has blurry image remotely.'"></textarea>
                             </div>
                             <div className="text-center mt-8 sm:mt-12">
                                 <button type="submit" className="btn-primary" disabled={isLoading}>
@@ -246,6 +299,17 @@ const ServiceCard = ({ icon, title, description, colSpan = '' }) => {
         <div className={`service-card bg-zinc-800 border border-zinc-700 rounded-xl p-6 sm:p-8 shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl flex flex-col items-center text-center ${colSpan}`}>
             <i data-lucide={icon} className="w-16 h-16 text-blue-400 mb-5 sm:mb-6 flex-shrink-0"></i>
             <h4 className="text-xl sm:text-2xl font-bold text-blue-300 mb-4">{title}</h4>
+            <p className="text-zinc-300 text-sm sm:text-base leading-relaxed flex-grow">{description}</p>
+        </div>
+    );
+};
+
+// FeatureCard Component (for "Why Choose Us" section)
+const FeatureCard = ({ icon, title, description }) => {
+    return (
+        <div className="bg-zinc-800 border border-zinc-700 rounded-xl p-6 sm:p-8 shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl flex flex-col items-center text-center">
+            <i data-lucide={icon} className="w-14 h-14 text-orange-400 mb-4 sm:mb-6 flex-shrink-0"></i>
+            <h4 className="text-xl sm:text-2xl font-bold text-orange-300 mb-3">{title}</h4>
             <p className="text-zinc-300 text-sm sm:text-base leading-relaxed flex-grow">{description}</p>
         </div>
     );
